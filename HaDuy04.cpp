@@ -1,5 +1,3 @@
-/* thêm const */
-
 #include <iostream>
 #include <ctime>
 
