@@ -1,5 +1,3 @@
-/* thêm logic thắng thua */
-
 #include <iostream>
 
 using namespace std;
