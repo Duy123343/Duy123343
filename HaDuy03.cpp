@@ -1,5 +1,3 @@
-/* thêm sinh ngẫu nhiên input */
-
 #include <iostream>
 #include <ctime>
 
