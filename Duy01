@@ -1,5 +1,3 @@
-/* game loop với logic tối thiểu chỉ đủ chạy được chương trình */
-
 #include <iostream>
 
 using namespace std;
@@ -10,7 +8,7 @@ struct Hangman {
     int badGuesses;
 
     void init() {
-        secretWord = "hello"; //todo: random
+        secretWord = "hello"
         guessedWord = string(secretWord.length(), '_');
         badGuesses = 0;
     }
