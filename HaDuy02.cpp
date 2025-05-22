@@ -1,5 +1,3 @@
-/* thêm logic thắng thua */
-
 #include <iostream>
 
 #define START 0
