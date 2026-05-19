@@ -77,12 +77,10 @@ class ReflexAgent(Agent):
         "*** YOUR CODE HERE ***"
         score = successorGameState.getScore()
 
-        # 1. Thức ăn gần nhất
         if newFood:
             minFoodDist = min(manhattanDistance(newPos, food) for food in newFood)
             score += 15.0 / (minFoodDist + 1)
 
-        # 2. Xử lý ma (có scared hay không)
         for i, ghost in enumerate(newGhostStates):
             ghostDist = manhattanDistance(newPos, ghost.getPosition())
             scaredTime = newScaredTimes[i]
@@ -99,11 +97,9 @@ class ReflexAgent(Agent):
                 else:
                     score -= 30.0 / (ghostDist + 1)
 
-        # 3. Thưởng nếu ăn được thức ăn ngay lập tức
         if len(newFood) < currentGameState.getNumFood():
             score += 80
 
-        # 4. Thưởng thêm nếu còn ít thức ăn
         if len(newFood) <= 5:
             score += 150
 
@@ -176,20 +172,19 @@ class MinimaxAgent(MultiAgentSearchAgent):
             nextAgent = (agentIndex + 1) % state.getNumAgents()
             newDepth = depth - 1 if nextAgent == 0 else depth
 
-            if agentIndex == 0:  # Pacman - MAX
+            if agentIndex == 0:  
                 best = float("-inf")
                 for action in state.getLegalActions(agentIndex):
                     successor = state.generateSuccessor(agentIndex, action)
                     best = max(best, minimaxValue(successor, newDepth, nextAgent))
                 return best
-            else:  # Ghosts - MIN
+            else:  
                 best = float("inf")
                 for action in state.getLegalActions(agentIndex):
                     successor = state.generateSuccessor(agentIndex, action)
                     best = min(best, minimaxValue(successor, newDepth, nextAgent))
                 return best
 
-        # Chọn action tốt nhất cho Pacman
         bestAction = None
         bestValue = float("-inf")
         for action in gameState.getLegalActions(0):
@@ -330,13 +325,11 @@ def betterEvaluationFunction(currentGameState: GameState):
 
     score = currentGameState.getScore()
 
-    # 1. Food
     if foodList:
         minFoodDist = min(manhattanDistance(pacPos, food) for food in foodList)
         score += 20.0 / (minFoodDist + 1)
         score -= 1.5 * len(foodList)
 
-    # 2. Ghosts
     for i, ghost in enumerate(ghostStates):
         dist = manhattanDistance(pacPos, ghost.getPosition())
         if scaredTimes[i] > 0:
@@ -347,12 +340,10 @@ def betterEvaluationFunction(currentGameState: GameState):
             elif dist <= 5:
                 score -= 120.0 / (dist + 1)
 
-    # 3. Capsules
     if capsules:
         minCapDist = min(manhattanDistance(pacPos, cap) for cap in capsules)
         score += 40.0 / (minCapDist + 1)
 
-    #4. Thưởng khi sắp thắng
     if len(foodList) <= 4:
         score += 400
 
